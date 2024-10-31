@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class Player_Movement : MonoBehaviour
 {
     private float horizontalInput;
     private float verticalInput;
     private float speed;
-
+    private int lives;
+    public GameObject bullet;
 
     // Start is called before the first frame update
     void Start(){
         speed = 6f;
+        lives = 3;
     }
     // Update is called once per frame
     void Update(){
         Moving();
+        Shooting();
     }
 
     void Moving(){
@@ -33,6 +36,16 @@ public class Movement : MonoBehaviour
         if (transform.position.y <= -4f)
         {
             transform.position = new Vector3(transform.position.x, -4f, 0);
+        }
+    }
+
+    void Shooting()
+    {
+        //if SPACE key is pressed create a bullet; what is a bullet?
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //create a bullet object at my position with my rotation
+            Instantiate(bullet, transform.position + new Vector3(0, 1, 0),Quaternion.identity);
         }
     }
 }
