@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(player, transform.position, Quaternion.identity);
         InvokeRepeating("CreateEnemy", 1f, 3f);
-        InvokeRepeating("CreateEnemy2", 3f, 1f);
+        InvokeRepeating("CreateEnemy2", 1f, 1f);
     }
     // Update is called once per frame
     void Update()
@@ -28,7 +28,8 @@ public class GameManager : MonoBehaviour
 
     void CreateEnemy2()
     {
-        Instantiate(enemy2, new Vector3(Random.Range(-9f, 9f), 8f, 0),
+        // they spawn at the edge of the scrren at the right
+        Instantiate(enemy2, new Vector3(11.5f, Random.Range(-6f, 0.5f), 0),
         Quaternion.identity);
 
     }
