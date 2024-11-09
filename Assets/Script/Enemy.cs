@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     {
         if (whatDidIHit.tag == "Player")
         {
+            GameObject.Find("GameManager").GetComponent<GameManager>().LiveScore(1);
             GameObject.Find("Player(Clone)").GetComponent<Player>().LoseALife();
             Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
