@@ -13,8 +13,7 @@ public class GameManager : MonoBehaviour
     private int score;
     private int lives;
 
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI livesText;
+    public TextMeshProUGUI scoreNlivesText;
 
     // Start is called before the first frame update
     void Start()
@@ -23,9 +22,8 @@ public class GameManager : MonoBehaviour
         InvokeRepeating("CreateEnemy", 1f, 3f);
         CreateSky();
         score = 0;
-        scoreText.text = "Score: " + score;
         lives = 3;
-        livesText.text = "Lives: " + lives;
+        scoreNlivesText.text = "Score: " + score + "\nLives: " + lives;
     }
 
     // Update is called once per frame
@@ -50,13 +48,13 @@ public class GameManager : MonoBehaviour
     public void EarnScore(int howMuch)
     {
         score = score + howMuch;
-        scoreText.text = "Score: " + score;
+        scoreNlivesText.text = "Score: " + score + "\nLives: " + lives;
     }
 
     public void LiveScore(int minusLive)
     {
         lives = lives - minusLive;
-        livesText.text = "Lives: " + lives;
+        scoreNlivesText.text = "Score: " + score + "\nLives: " + lives;
     }
 
 }
