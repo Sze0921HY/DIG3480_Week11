@@ -186,3 +186,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 4602996950676985178, guid: 8acae52fce4eb37408e38c0971bd6719, type: 3}
+  coins: {fileID: 134281886695203421, guid: 8c8f2be7b2a71fd4a97e3cf8c7c9ea0c, type: 3}
+  gameManager: {fileID: 0}
