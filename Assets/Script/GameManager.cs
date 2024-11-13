@@ -32,11 +32,18 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI gameOverText;
     public TextMeshProUGUI restartText;
     public TextMeshProUGUI powerupText;
+    public TextMeshProUGUI congratulationsText;
+    public TextMeshProUGUI nextlevelText;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        ResumeGame();
+        Scene scene = SceneManager.GetActiveScene();
+        Debug.Log("Active Scene is '" + scene.name + "'.");
+
         Instantiate(player, transform.position, Quaternion.identity);
         InvokeRepeating("CreateEnemy", 1f, 3f);
         StartCoroutine(CreatePowerup());
@@ -53,8 +60,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Restart();
-
+        if (score >= 20) 
+            NextLevel();
+        else
+            Restart();
+        
     }
     public void CreateCoin()
     {
@@ -98,15 +108,18 @@ public class GameManager : MonoBehaviour
         //Debug.Log("GG");
         CancelInvoke();
         gameOverText.gameObject.SetActive(true);
-        restartText.gameObject.SetActive(true);
+        StartCoroutine(Blinking());
+
         MovingObjectSpeed = 0;
     }
+
+
 
     void Restart()
     {
         if (Input.GetKeyDown(KeyCode.R) && isPlayerAlive == false)
         {
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("Level1");
         }
     }
 
@@ -125,5 +138,55 @@ public class GameManager : MonoBehaviour
     }
 
 
+    IEnumerator Blinking()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
+            restartText.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            restartText.gameObject.SetActive(false);
+        }
+    }
 
+    void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    void ResumeGame()
+    {
+        Time.timeScale = 1;
+    }
+
+    public void NextLevelOrMainMenu()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int totalScenes = SceneManager.sceneCountInBuildSettings;
+
+        // If current scene is the last one, go to main menu (scene index 0)
+        if (currentSceneIndex == totalScenes - 1)
+        {
+            Debug.Log("BACK TO MAINMENU");
+            SceneManager.LoadScene("MainMenu");
+        }
+        else
+        {
+            Debug.Log("Keep going");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
+
+    public void NextLevel()
+    {
+        PauseGame();
+        CancelInvoke();
+        congratulationsText.gameObject.SetActive(true);
+        nextlevelText.gameObject.SetActive(true);
+        MovingObjectSpeed = 0;
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            NextLevelOrMainMenu();
+        }
+    }
 }

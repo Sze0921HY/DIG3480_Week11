@@ -128,6 +128,8 @@ public class Player : MonoBehaviour
     IEnumerator WithoutTheShield()
     {
         yield return new WaitForSeconds(3f);
+        hasShield = false;
+        shield.SetActive(hasShield);
         gameManager.UpdatePowerupText("");
         gameManager.PlayPowerDown();
     }
