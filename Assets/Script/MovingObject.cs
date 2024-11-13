@@ -6,11 +6,13 @@ public class MovingObject : MonoBehaviour
 {
 
     public int myType;
+    private GameManager gameManager;
+
 
     // Start is called before the first frame update
     void Start()
     {
-
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -29,13 +31,20 @@ public class MovingObject : MonoBehaviour
         else if (myType == 3)
         {
             //I am a cloud
-            transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime * Random.Range(2f, 6f));
+            transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime * Random.Range(3f, 6f) * gameManager.MovingObjectSpeed);
         }
         else if (myType == 4)
         {
             // I am a Coin 
-            transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime * 5f);
+            transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime * 5f * gameManager.MovingObjectSpeed);
         }
+        else if (myType == 5) 
+        {
+            //I am a powerup
+            transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime * 6f * gameManager.MovingObjectSpeed);
+
+        }
+
 
         if ((transform.position.y > 9f || transform.position.y <= -9f) && myType != 3)
         {
