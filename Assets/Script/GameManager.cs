@@ -60,7 +60,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (score >= 20) 
+        // get to next level wen reach 100 
+        if (score >= 100) 
             NextLevel();
         else
             Restart();
@@ -180,10 +181,9 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         PauseGame();
-        CancelInvoke();
         congratulationsText.gameObject.SetActive(true);
         nextlevelText.gameObject.SetActive(true);
-        MovingObjectSpeed = 0;
+        // MovingObjectSpeed = 0;
         if (Input.GetKeyDown(KeyCode.R))
         {
             NextLevelOrMainMenu();
