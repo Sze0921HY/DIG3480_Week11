@@ -115,7 +115,7 @@ public class Player : MonoBehaviour
         speed = 6f;
         thruster.gameObject.SetActive(false);
         gameManager.UpdatePowerupText("");
-    }
+    } 
 
     IEnumerator ShootingPowerDown()
     {
@@ -125,18 +125,24 @@ public class Player : MonoBehaviour
     }
 
 
-    IEnumerator BacktoNormal()
+    IEnumerator WithoutTheShield()
     {
         yield return new WaitForSeconds(3f);
         gameManager.UpdatePowerupText("");
+        gameManager.PlayPowerDown();
     }
 
-
+     IEnumerator DelaySound()
+    {
+        yield return new WaitForSeconds(2f);
+        gameManager.PlayPowerDown();
+    }
 
     private void OnTriggerEnter2D(Collider2D whatIHit)
     {
         if (whatIHit.tag == "Powerup")
         {
+            gameManager.PlayPowerUp();
             int powerupType = Random.Range(1, 5); //this can be 1, 2, 3, or 4
             switch (powerupType)
             {
@@ -146,12 +152,15 @@ public class Player : MonoBehaviour
                     gameManager.UpdatePowerupText("Picked up Speed!");
                     thruster.gameObject.SetActive(true);
                     StartCoroutine(SpeedPowerDown());
+                    StartCoroutine(DelaySound());
+
                     break;
                 case 2:
                     //double shot
                     shooting = 2;
                     gameManager.UpdatePowerupText("Picked up Double Shot!");
                     StartCoroutine(ShootingPowerDown());
+                    StartCoroutine(DelaySound());
 
                     break;
                 case 3:
@@ -159,6 +168,7 @@ public class Player : MonoBehaviour
                     shooting = 3;
                     gameManager.UpdatePowerupText("Picked up Triple Shot!");
                     StartCoroutine(ShootingPowerDown());
+                    StartCoroutine(DelaySound());
 
                     break;
                 case 4:
@@ -166,9 +176,12 @@ public class Player : MonoBehaviour
                     gameManager.UpdatePowerupText("Picked up Shield!");
                     hasShield = true;
                     shield.SetActive(hasShield);
-                    StartCoroutine(BacktoNormal());
+                    StartCoroutine(WithoutTheShield());
+                    
+
                     break;
             }
+           
             Destroy(whatIHit.gameObject);
         }
     }

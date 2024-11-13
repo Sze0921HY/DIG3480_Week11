@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
     public GameObject coin;
     public GameObject powerup;
 
+    public AudioClip powerUp;
+    public AudioClip powerDown;
+
+
 
     public int MovingObjectSpeed;
 
@@ -110,5 +114,16 @@ public class GameManager : MonoBehaviour
     {
         powerupText.text = whichPowerup;
     }
+
+    public void PlayPowerUp()
+    {
+        AudioSource.PlayClipAtPoint(powerUp, Camera.main.transform.position);
+    }
+    public void PlayPowerDown()
+    {
+        AudioSource.PlayClipAtPoint(powerDown, Camera.main.transform.position);
+    }
+
+
 
 }
